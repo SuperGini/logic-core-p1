@@ -1,0 +1,53 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: logic-core
+  datasource:
+    url: jdbc:mysql://localhost:3306/pictures_db?createDatabaseIfNotExist=true
+    username: bau
+    password: 123
+
+##HikariCP configuration
+  #  https://vladmihalcea.com/spring-boot-application-properties/
+  #  https://vladmihalcea.com/mysql-jdbc-statement-caching/
+    hikari:
+      minimum-idle: 0
+      maximum-pool-size: 40
+      max-lifetime: 60000
+      transaction-isolation: TRANSACTION_READ_COMMITTED
+      auto-commit: false
+      data-source-properties:
+        useServerPrepStmts: false
+        cachePrepStmts: true
+        prepStmtCacheSize: 500
+        prepStmtCacheSqlLimit: 1024
+
+## Hibernate properties
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 15
+        order_updates: true
+        order_inserts: true
+        connection:
+          provider_disables_autocommit: true
+        query:
+          in_clause_parameter_padding: true
+          fail_on_pagination_over_collection_fetch: true
+          plan_cache_max_size: 4096
+
+
+logging:
+  level:
+    net:
+      ttddyy:
+        dsproxy:
+          listener: info
