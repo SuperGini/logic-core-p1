@@ -32,23 +32,23 @@ public class User {
 
     @Id
     @Tsid
-    @Column(name = "id", unique = true)
+    @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @Column(name = "username", updatable = false, unique = true)
+    @Column(name = "username", updatable = false, unique = true, nullable = false)
     private String username;
 
-    @Column(name = "email", unique = true)
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Column(name = "passwod")
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Column(name = "profile_picture")
     private byte[] profilePicture;
 
     @Version
-    @Column(name = "version")
+    @Column(name = "version", nullable = false)
     private short version;
 
     @OneToMany(

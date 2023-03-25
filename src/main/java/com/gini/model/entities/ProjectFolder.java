@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -35,31 +36,31 @@ public class ProjectFolder {
 
     @Id
     @Tsid
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "project_name")
+    @Column(name = "project_name", nullable = false)
     private String projectName;
 
     @CreationTimestamp
-    @Column(name = "create_date")
+    @Column(name = "create_date", nullable = false)
     private OffsetDateTime createDate;
 
     @UpdateTimestamp
-    @Column(name = "update_date")
+    @Column(name = "update_date", nullable = false)
     private OffsetDateTime updateDate;
 
     @Column(name = "documents_number")
     private Integer numberOfDocuments;
 
-    @Column(name = "number_of_images")
+    @Column(name = "images_number")
     private Integer numberOfImages;
 
-    @Column(name = "number_of_videos")
+    @Column(name = "videos_number")
     private Integer numberOfVideos;
 
-    @Column(name = "number_of_documents")
-    private Integer numberOfOtherDocuments;
+    @Column(name = "other_files_number")
+    private Integer numberOfOtherFiles;
 
     @Column(name = "folder_capacity")
     private BigDecimal folderCapacity;
@@ -71,10 +72,12 @@ public class ProjectFolder {
     private String lastUpdateByUser;
 
     @Version
-    @Column(name = "version")
+    @Column(name = "version", nullable = false)
     private short version;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "projectFolder")

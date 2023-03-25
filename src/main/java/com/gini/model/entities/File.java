@@ -1,11 +1,17 @@
 package com.gini.model.entities;
 
 
+import com.gini.model.enums.FileType;
 import io.hypersistence.utils.hibernate.id.Tsid;
+import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -27,19 +33,22 @@ public class File {
 
     @Id
     @Tsid
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "file_froamt")
+    @Column(name = "file_format",length = 10)
     private String fileFormat;
 
-    @Column(name = "file_type")
-    private String fileType;
+    @Column(name = "file_type", length = 100)
+    @Enumerated(EnumType.STRING)
+    private FileType fileType;
 
     @Column(name = "file")
+    @Lob
     private byte [] file;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "folder_id")
     private ProjectFolder projectFolder;
 
     @Override

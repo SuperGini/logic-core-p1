@@ -26,9 +26,9 @@ spring:
 
 ## Hibernate properties
   jpa:
-    generate-ddl: true
+#    generate-ddl: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     show-sql: false
     open-in-view: false
     properties:
@@ -43,7 +43,6 @@ spring:
           in_clause_parameter_padding: true
           fail_on_pagination_over_collection_fetch: true
           plan_cache_max_size: 4096
-
 
 logging:
   level:
