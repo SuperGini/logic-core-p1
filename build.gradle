@@ -24,7 +24,8 @@ ext {
 
 dependencies {
 
-    implementation group: 'net.ttddyy', name: 'datasource-proxy', version: '1.8.1'
+    implementation group: 'com.github.gavlyukovskiy', name: 'datasource-proxy-spring-boot-starter', version: '1.9.0'
+    implementation group: 'io.hypersistence', name: 'hypersistence-utils-hibernate-60', version: '3.2.0'
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
