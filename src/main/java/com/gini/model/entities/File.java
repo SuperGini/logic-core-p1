@@ -14,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -43,9 +44,11 @@ public class File {
     @Enumerated(EnumType.STRING)
     private FileType fileType;
 
-    @Column(name = "file")
-    @Lob
-    private byte [] file;
+    @Column(name = "file_location")
+    private String fileLocation;
+
+    @Transient
+    private byte [] fileInBytes;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "folder_id")
