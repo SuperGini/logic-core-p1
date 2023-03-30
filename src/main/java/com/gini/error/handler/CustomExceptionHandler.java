@@ -24,13 +24,18 @@ public class CustomExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleMethodArgumentNotValidExceptionException(MethodArgumentNotValidException e) {
 
+        var fieldErrors = e.getBindingResult().getFieldErrors();
 
-        var fieldsWithErrors = e.getBindingResult().getFieldErrors().stream()
-                .filter(distinctByKey(FieldError::getField))
-                .map(this::fieldsWithErrors)
-                .collect(Collectors.joining("; "));
+        var fieldsWithErrors = fieldErrors.stream()
+                                                    .filter(distinctByKey(FieldError::getField))
+                                                    .map(this::fieldsWithErrors)
+                                                    .collect(Collectors.joining("; "));
 
-        return new ErrorResponse(400, HttpStatus.BAD_REQUEST.getReasonPhrase(), fieldsWithErrors);
+        return new ErrorResponse(
+                                400,
+                                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                                fieldsWithErrors
+        );
 
     }
 

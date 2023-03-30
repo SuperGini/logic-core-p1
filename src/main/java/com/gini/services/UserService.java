@@ -17,6 +17,8 @@ public class UserService {
     @Transactional
     public User createUser(UserRequest userRequest){
 
+        //todo: find user in db -> if he exists -> thow UserAllreadyexistsException
+
         User user = User.builder()
                 .username(userRequest.username())
                 .email(userRequest.email())

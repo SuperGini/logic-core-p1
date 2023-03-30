@@ -39,10 +39,10 @@ public class Controller {
     @ResponseStatus(HttpStatus.CREATED)
     public File2 saveImage(@RequestPart File2 imageInfo, @RequestPart MultipartFile imageFile) throws IOException {
 
-        File2 file2 = new File2();
-        file2.setFileInBytes(imageFile.getBytes());
-        file2.setName(imageFile.getName());
-        file2.setContentType(imageFile.getContentType());
+//        File2 file2 = new File2();
+//        file2.setFileInBytes(imageFile.getBytes());
+//        file2.setName(imageFile.getName());
+//        file2.setContentType(imageFile.getContentType());
 
 
 
