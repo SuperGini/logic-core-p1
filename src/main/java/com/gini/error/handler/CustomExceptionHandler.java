@@ -1,5 +1,6 @@
 package com.gini.error.handler;
 
+import com.gini.error.error.InvalidCredentialsException;
 import com.gini.error.error.UserAlreadyExists;
 import com.gini.error.error.UserNotFoundException;
 import com.gini.error.response.ErrorResponse;
@@ -72,6 +73,16 @@ public class CustomExceptionHandler {
         log.error("Invalid username: ", e);
         return new ErrorResponse(
                 404,
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                e.getMessage());
+    }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleInvalidCredentialsException(InvalidCredentialsException e){
+        log.error("Invalid credentials: ", e);
+        return new ErrorResponse(
+                400,
                 HttpStatus.BAD_REQUEST.getReasonPhrase(),
                 e.getMessage());
     }
