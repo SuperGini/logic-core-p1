@@ -1,6 +1,10 @@
 package com.gini.error.handler;
 
-import com.gini.error.error.ErrorResponse;
+import com.gini.error.error.UserAlreadyExists;
+import com.gini.error.error.UserNotFoundException;
+import com.gini.error.response.ErrorResponse;
+import jakarta.validation.ConstraintViolationException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -14,6 +18,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RestControllerAdvice
 public class CustomExceptionHandler {
 
@@ -30,14 +35,47 @@ public class CustomExceptionHandler {
                                                     .filter(distinctByKey(FieldError::getField))
                                                     .map(this::fieldsWithErrors)
                                                     .collect(Collectors.joining("; "));
-
+        log.error("Validation error: ", e);
         return new ErrorResponse(
                                 400,
                                 HttpStatus.BAD_REQUEST.getReasonPhrase(),
                                 fieldsWithErrors
         );
-
     }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleUserNotFoundException(UserNotFoundException e){
+        log.error("User not found: ", e);
+        return new ErrorResponse(
+                400,
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                e.getMessage()
+        );
+    }
+
+    @ExceptionHandler(UserAlreadyExists.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleUserAlreadyExistException(UserAlreadyExists e){
+        log.error("User already exists: ", e);
+        return new ErrorResponse(
+                409,
+                HttpStatus.CONFLICT.getReasonPhrase(),
+                e.getMessage()
+        );
+    }
+
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleConstraintViolationException(ConstraintViolationException e){
+        log.error("Invalid username: ", e);
+        return new ErrorResponse(
+                404,
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                e.getMessage());
+    }
+
 
 
     public <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {

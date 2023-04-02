@@ -1,4 +1,4 @@
-package com.gini.error.error;
+package com.gini.error.response;
 
 
 public record ErrorResponse(

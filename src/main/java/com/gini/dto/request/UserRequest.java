@@ -1,18 +1,18 @@
 package com.gini.dto.request;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 
 public record UserRequest(
 
-        @Pattern(regexp = "^[A-Za-z]+$")
-        @Size(min = 5, max = 60)
+        @Pattern(regexp = "^[A-Za-z]{5,60}$")
         @NotNull
         String username,
 
-        @Email
+        /**
+         * https://www.baeldung.com/java-email-validation-regex
+         * */
+        @Pattern(regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
         @NotNull
         String email,
 
