@@ -1,4 +1,4 @@
-package com.gini.model.enums;
+package com.gini.persitence.model.enums;
 
 import lombok.Getter;
 

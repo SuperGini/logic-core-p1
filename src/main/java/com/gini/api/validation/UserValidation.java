@@ -1,4 +1,4 @@
-package com.gini.validation;
+package com.gini.api.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

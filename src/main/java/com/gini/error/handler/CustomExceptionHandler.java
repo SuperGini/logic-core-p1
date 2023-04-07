@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
@@ -85,6 +86,16 @@ public class CustomExceptionHandler {
                 400,
                 HttpStatus.BAD_REQUEST.getReasonPhrase(),
                 e.getMessage());
+    }
+
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleSQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException e){
+        log.error("User id not found: ", e);
+        return new ErrorResponse(
+                400,
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                "Could not create folder, wrong userId");
     }
 
 

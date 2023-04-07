@@ -1,6 +1,7 @@
-package com.gini.repository.user;
+package com.gini.persitence.repository.user;
 
-import com.gini.model.entities.User;
+import com.gini.persitence.model.entities.User;
+import com.gini.persitence.repository.HibernateRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +13,5 @@ public interface UserRepository extends HibernateRepository<User>, JpaRepository
 
     Optional<User> findUserByEmail(String email);
     Optional<User> findUserByUsername(String email);
-
     Optional<User> findUserByUsernameOrEmail(String username, String email);
 }

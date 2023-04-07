@@ -1,4 +1,4 @@
-package com.gini.model.entities;
+package com.gini.persitence.model.entities;
 
 import io.hypersistence.utils.hibernate.id.Tsid;
 import jakarta.persistence.CascadeType;
@@ -21,6 +21,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,7 +41,7 @@ public class ProjectFolder {
     private Long id;
 
     @Column(name = "project_name", nullable = false)
-    private String projectName;
+    private String folderName;
 
     @CreationTimestamp
     @Column(name = "create_date", nullable = false)
@@ -81,14 +82,14 @@ public class ProjectFolder {
     private User user;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "projectFolder")
-    private List<File> files;
+    private List<File> files = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProjectFolder that = (ProjectFolder) o;
-        return Objects.equals(id, that.id) && Objects.equals(projectName, that.projectName) && Objects.equals(createDate, that.createDate) && Objects.equals(user, that.user);
+        return Objects.equals(id, that.id) && Objects.equals(folderName, that.folderName) && Objects.equals(createDate, that.createDate) && Objects.equals(user, that.user);
     }
 
     @Override

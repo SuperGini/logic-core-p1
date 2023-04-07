@@ -1,9 +1,9 @@
-package com.gini.dto.request;
+package com.gini.dto.request.user;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
-public record UserRequest(
+public record CreateUserRequest(
 
         @Pattern(regexp = "^[A-Za-z]{5,60}$")
         @NotNull

@@ -1,9 +1,10 @@
-package com.gini.model.entities;
+package com.gini.persitence.model.entities;
 
 import io.hypersistence.utils.hibernate.id.Tsid;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -14,6 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -53,13 +55,14 @@ public class User {
 
     @OneToMany(
             mappedBy = "user",
+            fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE,
                     CascadeType.REFRESH
             }
     )
-    private List<ProjectFolder> projectFolders;
+    private List<ProjectFolder> projectFolders = new ArrayList<>();
 
 
     @Override

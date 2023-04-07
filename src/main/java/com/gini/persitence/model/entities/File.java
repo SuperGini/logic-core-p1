@@ -1,9 +1,8 @@
-package com.gini.model.entities;
+package com.gini.persitence.model.entities;
 
 
-import com.gini.model.enums.FileType;
+import com.gini.persitence.model.enums.FileType;
 import io.hypersistence.utils.hibernate.id.Tsid;
-import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -11,7 +10,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;

@@ -1,10 +1,10 @@
-package com.gini.controller;
+package com.gini.api.controller;
 
-import com.gini.dto.request.UserLoginRequest;
-import com.gini.dto.request.UserRequest;
+import com.gini.api.validation.UserValidation;
+import com.gini.dto.request.user.LoginUserRequest;
+import com.gini.dto.request.user.CreateUserRequest;
 import com.gini.dto.response.UserResponse;
 import com.gini.services.UserService;
-import com.gini.validation.UserValidation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,18 +21,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1")
 @RequiredArgsConstructor
 @Validated
-public class Controller {
+public class UserController {
 
     private final UserService userService;
 
     @PostMapping("/user")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserResponse createUser(@RequestBody @Valid UserRequest userRequest) {
+    public UserResponse createUser(@RequestBody @Valid CreateUserRequest userRequest) {
         return userService.createUser(userRequest);
     }
 
     @PostMapping("/user/login")
-    public UserResponse loginUser(@RequestBody @Valid @UserValidation UserLoginRequest userRequest){
+    @ResponseStatus(HttpStatus.OK)
+    public UserResponse loginUser(@RequestBody @Valid @UserValidation LoginUserRequest userRequest){
         return userService.loginUser(userRequest);
     }
 

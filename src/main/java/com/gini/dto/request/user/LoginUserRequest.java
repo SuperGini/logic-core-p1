@@ -1,9 +1,9 @@
-package com.gini.dto.request;
+package com.gini.dto.request.user;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
-public record UserLoginRequest(
+public record LoginUserRequest(
 
         @NotNull
         String usernameOrEmail,

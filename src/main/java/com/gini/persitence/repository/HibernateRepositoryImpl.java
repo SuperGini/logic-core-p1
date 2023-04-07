@@ -1,4 +1,4 @@
-package com.gini.repository.user;
+package com.gini.persitence.repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

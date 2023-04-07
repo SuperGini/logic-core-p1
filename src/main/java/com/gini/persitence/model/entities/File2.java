@@ -1,4 +1,4 @@
-package com.gini.model.entities;
+package com.gini.persitence.model.entities;
 
 import io.hypersistence.utils.hibernate.id.Tsid;
 import jakarta.persistence.Entity;
