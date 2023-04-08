@@ -1,5 +1,6 @@
 package com.gini.dto.request.folder;
 
+import com.gini.dto.response.FolderResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,6 +18,8 @@ import java.util.List;
 public class FolderResponsePagination {
 
     private int totalPages;
-    List<FolderResponse> folderResponses = new ArrayList<>();
+
+    @Builder.Default //so that the builder takes my instantiation of the list and not instantiate the list when the builder is created
+    private List<FolderResponse> folderResponses = new ArrayList<>();
 
 }

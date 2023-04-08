@@ -1,5 +1,7 @@
-package com.gini.dto.request.folder;
+package com.gini.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,11 +16,14 @@ import java.time.OffsetDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class FolderResponse {
 
-    private Long id;
+    private String id;
     private String projectName;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private OffsetDateTime createDate;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private OffsetDateTime updateDate;
     private Integer numberOfImages;
     private Integer numberOfVideos;
@@ -26,6 +31,6 @@ public class FolderResponse {
     private BigDecimal folderCapacity;
     private BigDecimal currentFolderCapacity;
     private String lastUpdateByUser;
-    private Long userId;
+    private String userId;
     private String username;
 }

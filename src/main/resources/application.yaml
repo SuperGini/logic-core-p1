@@ -45,6 +45,13 @@ spring:
           fail_on_pagination_over_collection_fetch: true
           plan_cache_max_size: 4096
 
+#  jackson:
+##    time-zone: Europe/Bucharest
+#    default-property-inclusion: non_null
+#    serialization:
+#      write-dates-as-timestamps: false
+
+
 
   servlet:
     multipart:

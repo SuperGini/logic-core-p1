@@ -1,7 +1,7 @@
 package com.gini.services;
 
 import com.gini.dto.request.folder.CreateFolderRequest;
-import com.gini.dto.request.folder.FolderResponse;
+import com.gini.dto.response.FolderResponse;
 import com.gini.dto.request.folder.FolderResponsePagination;
 import com.gini.mappers.response.FolderMapper;
 import com.gini.persitence.dto.FolderInfo;
@@ -16,8 +16,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * Find by Id anti-pattern
@@ -55,13 +53,14 @@ public class FolderService {
     }
 
     @Transactional
-    public FolderResponsePagination getAllFoldersByIdWithPagination(Long userId, Integer pageNumber){
-        FolderResponsePagination response = new FolderResponsePagination();
+    public FolderResponsePagination getAllFoldersByIdWithPagination(String userId, Integer pageNumber){
+        var userIdAsLong = Long.parseLong(userId);
 
-        Pageable pageWithThreeElements = PageRequest.of(pageNumber, 3);
+        FolderResponsePagination response = new FolderResponsePagination();
+        Pageable pageWithThreeElements = PageRequest.of(pageNumber, 5);
 
         Page<FolderInfo> page =  projectFolderRepository
-                                            .findProjectsByUserIdWithPagination(userId,pageWithThreeElements);
+                                            .findProjectsByUserIdWithPagination(userIdAsLong,pageWithThreeElements);
 
         var totalPages = page.getTotalPages();
         response.setTotalPages(totalPages);

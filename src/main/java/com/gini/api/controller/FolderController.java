@@ -2,7 +2,7 @@ package com.gini.api.controller;
 
 
 import com.gini.dto.request.folder.CreateFolderRequest;
-import com.gini.dto.request.folder.FolderResponse;
+import com.gini.dto.response.FolderResponse;
 import com.gini.dto.request.folder.FolderResponsePagination;
 import com.gini.services.FolderService;
 import lombok.RequiredArgsConstructor;
@@ -16,15 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/v1"
-//        consumes = APPLICATION_JSON_VALUE,
-//        produces = APPLICATION_JSON_VALUE
+@RequestMapping(value = "/v1",
+        consumes = APPLICATION_JSON_VALUE,
+        produces = APPLICATION_JSON_VALUE
 )
 @RequiredArgsConstructor
 public class FolderController {
@@ -41,9 +39,8 @@ public class FolderController {
 
     @GetMapping("/folders/{userId}/{pageNumber}")
     @ResponseStatus(HttpStatus.OK)
-    public FolderResponsePagination getAllFoldersByIdWithPagination(@PathVariable Long userId, @PathVariable Integer pageNumber){
+    public FolderResponsePagination getAllFoldersByIdWithPagination(@PathVariable String userId, @PathVariable Integer pageNumber) {
         return folderService.getAllFoldersByIdWithPagination(userId, pageNumber);
     }
-
 
 }

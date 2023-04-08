@@ -1,7 +1,7 @@
 package com.gini.mappers.response;
 
 import com.gini.dto.request.folder.CreateFolderRequest;
-import com.gini.dto.request.folder.FolderResponse;
+import com.gini.dto.response.FolderResponse;
 import com.gini.mappers.Mapper;
 import com.gini.persitence.dto.FolderInfo;
 import com.gini.persitence.model.entities.ProjectFolder;
@@ -14,7 +14,7 @@ public class FolderMapper implements Mapper<ProjectFolder, CreateFolderRequest, 
     @Override
     public FolderResponse mapToResponse(ProjectFolder value) {
         return FolderResponse.builder()
-                .id(value.getId())
+                .id(String.valueOf(value.getId()))
                 .projectName(value.getFolderName())
                 .createDate(value.getCreateDate())
                 .updateDate(value.getUpdateDate())
@@ -24,14 +24,14 @@ public class FolderMapper implements Mapper<ProjectFolder, CreateFolderRequest, 
                 .folderCapacity(value.getFolderCapacity())
                 .currentFolderCapacity(value.getCurrentFolderCapacity())
                 .lastUpdateByUser(value.getLastUpdateByUser())
-                .userId(value.getUser().getId())
+                .userId(String.valueOf(value.getUser().getId()))
                 .build();
     }
 
     public FolderResponse mapToResponse(FolderInfo folderInfo) {
         return FolderResponse.builder()
-                .id(folderInfo.getFolderId())
-                .userId(folderInfo.getUserid())
+                .id(String.valueOf(folderInfo.getFolderId()))
+                .userId(String.valueOf(folderInfo.getUserid()))
                 .username(folderInfo.getUsername())
                 .projectName(folderInfo.getProjectName())
                 .createDate(folderInfo.getCreateDate())
