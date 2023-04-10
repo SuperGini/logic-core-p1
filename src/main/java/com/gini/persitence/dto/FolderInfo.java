@@ -1,5 +1,6 @@
 package com.gini.persitence.dto;
 
+import com.gini.persitence.model.enums.FolderType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +19,7 @@ public class FolderInfo {
     private OffsetDateTime createDate;
     private OffsetDateTime updateDate;
     private String lastUpdateByUser;
+    private FolderType folderType;
 
     public FolderInfo(Long userid,
                       Long folderId,
@@ -25,7 +27,8 @@ public class FolderInfo {
                       String projectName,
                       OffsetDateTime createDate,
                       OffsetDateTime updateDate,
-                      String lastUpdateByUser) {
+                      String lastUpdateByUser,
+                      FolderType folderType) {
         this.userid = userid;
         this.folderId = folderId;
         this.username = username;
@@ -33,5 +36,6 @@ public class FolderInfo {
         this.createDate = createDate;
         this.updateDate = updateDate;
         this.lastUpdateByUser = lastUpdateByUser;
+        this.folderType = folderType;
     }
 }

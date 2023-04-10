@@ -7,6 +7,7 @@ import com.gini.mappers.response.FolderMapper;
 import com.gini.persitence.dto.FolderInfo;
 import com.gini.persitence.model.entities.ProjectFolder;
 import com.gini.persitence.model.entities.User;
+import com.gini.persitence.model.enums.FolderType;
 import com.gini.persitence.repository.folder.ProjectFolderRepository;
 import com.gini.persitence.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +45,7 @@ public class FolderService {
 
         ProjectFolder projectFolder = ProjectFolder.builder()
                 .folderName(projectName)
+                .folderType(FolderType.fromString(createFolderRequest.folderType()))
                 .user(user)
                 .build();
 
@@ -53,18 +55,20 @@ public class FolderService {
     }
 
     @Transactional
-    public FolderResponsePagination getAllFoldersByIdWithPagination(String userId, Integer pageNumber){
+    public FolderResponsePagination getAllFoldersByIdWithPagination(String userId, Integer pageNumber, Integer pageElements){
         var userIdAsLong = Long.parseLong(userId);
 
         FolderResponsePagination response = new FolderResponsePagination();
-        Pageable pageWithThreeElements = PageRequest.of(pageNumber, 5);
+        Pageable pageWithThreeElements = PageRequest.of(pageNumber, pageElements);
 
         Page<FolderInfo> page =  projectFolderRepository
                                             .findProjectsByUserIdWithPagination(userIdAsLong,pageWithThreeElements);
 
         var totalPages = page.getTotalPages();
-        response.setTotalPages(totalPages);
+        var totalElements = (int) page.getTotalElements();
 
+        response.setTotalPages(totalPages);
+        response.setTotalElements(totalElements);
         page.stream()
                     .map(folderMapper::mapToResponse)
                     .forEach(folderResponse -> response.getFolderResponses().add(folderResponse));

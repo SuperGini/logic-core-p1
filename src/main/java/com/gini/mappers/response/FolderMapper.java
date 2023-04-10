@@ -37,6 +37,7 @@ public class FolderMapper implements Mapper<ProjectFolder, CreateFolderRequest, 
                 .createDate(folderInfo.getCreateDate())
                 .updateDate(folderInfo.getUpdateDate())
                 .lastUpdateByUser(folderInfo.getLastUpdateByUser())
+                .folderType(folderInfo.getFolderType().getType())
                 .build();
     }
 }

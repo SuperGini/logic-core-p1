@@ -18,6 +18,7 @@ import java.util.List;
 public class FolderResponsePagination {
 
     private int totalPages;
+    private int totalElements;
 
     @Builder.Default //so that the builder takes my instantiation of the list and not instantiate the list when the builder is created
     private List<FolderResponse> folderResponses = new ArrayList<>();

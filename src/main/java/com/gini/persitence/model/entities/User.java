@@ -53,6 +53,7 @@ public class User {
     @Column(name = "version", nullable = false)
     private short version;
 
+    @Builder.Default
     @OneToMany(
             mappedBy = "user",
             fetch = FetchType.LAZY,

@@ -2,6 +2,8 @@ package com.gini.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.gini.persitence.model.enums.FileType;
+import com.gini.persitence.model.enums.FolderType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,4 +35,5 @@ public class FolderResponse {
     private String lastUpdateByUser;
     private String userId;
     private String username;
+    private String folderType;
 }

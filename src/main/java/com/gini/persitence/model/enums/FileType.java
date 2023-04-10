@@ -5,10 +5,11 @@ import lombok.Getter;
 @Getter
 public enum FileType {
 
-    DOCUMENT("document"),
     VIDEO("video"),
-    PICTURE("picture"),
-    OTHER("other");
+    AUDIO("audio"),
+    FILE("file"),
+    OTHER("other"),
+    PICTURE("picture");
 
 
     private final String type;

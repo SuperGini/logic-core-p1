@@ -1,9 +1,12 @@
 package com.gini.persitence.model.entities;
 
+import com.gini.persitence.model.enums.FolderType;
 import io.hypersistence.utils.hibernate.id.Tsid;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -72,6 +75,10 @@ public class ProjectFolder {
     @Column(name = "last_update_user")
     private String lastUpdateByUser;
 
+    @Column(name = "folder_type", length = 100, nullable = false)
+    @Enumerated(EnumType.STRING)
+    private FolderType folderType;
+
     @Version
     @Column(name = "version", nullable = false)
     private short version;
@@ -81,6 +88,7 @@ public class ProjectFolder {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Builder.Default
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "projectFolder")
     private List<File> files = new ArrayList<>();
 

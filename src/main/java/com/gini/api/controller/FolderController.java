@@ -37,10 +37,13 @@ public class FolderController {
         return folderService.createProjectFolder(createFolderRequest);
     }
 
-    @GetMapping("/folders/{userId}/{pageNumber}")
+    @GetMapping("/folders/{userId}/{pageNumber}/{pageElements}")
     @ResponseStatus(HttpStatus.OK)
-    public FolderResponsePagination getAllFoldersByIdWithPagination(@PathVariable String userId, @PathVariable Integer pageNumber) {
-        return folderService.getAllFoldersByIdWithPagination(userId, pageNumber);
+    public FolderResponsePagination getAllFoldersByIdWithPagination(@PathVariable String userId,
+                                                                    @PathVariable Integer pageNumber,
+                                                                    @PathVariable Integer pageElements
+    ) {
+        return folderService.getAllFoldersByIdWithPagination(userId, pageNumber, pageElements);
     }
 
 }

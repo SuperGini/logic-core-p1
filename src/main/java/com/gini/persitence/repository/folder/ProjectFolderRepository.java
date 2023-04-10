@@ -22,7 +22,8 @@ public interface ProjectFolderRepository extends HibernateRepository<ProjectFold
                 folder.folderName,
                 folder.createDate,
                 folder.updateDate,
-                folder.lastUpdateByUser
+                folder.lastUpdateByUser,
+                folder.folderType
             )
              FROM ProjectFolder folder
              JOIN folder.user AS user
