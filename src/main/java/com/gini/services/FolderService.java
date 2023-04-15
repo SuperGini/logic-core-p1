@@ -54,26 +54,50 @@ public class FolderService {
         return folderMapper.mapToResponse(savedProjectFolder);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public FolderResponsePagination getAllFoldersByIdWithPagination(String userId, Integer pageNumber, Integer pageElements){
         var userIdAsLong = Long.parseLong(userId);
 
         FolderResponsePagination response = new FolderResponsePagination();
-        Pageable pageWithThreeElements = PageRequest.of(pageNumber, pageElements);
+        Pageable pageWithElements = PageRequest.of(pageNumber, pageElements);
 
         Page<FolderInfo> page =  projectFolderRepository
-                                            .findProjectsByUserIdWithPagination(userIdAsLong,pageWithThreeElements);
+                                            .findProjectsByUserIdWithPagination(userIdAsLong,pageWithElements);
 
         var totalPages = page.getTotalPages();
         var totalElements = (int) page.getTotalElements();
 
         response.setTotalPages(totalPages);
         response.setTotalElements(totalElements);
+
         page.stream()
                     .map(folderMapper::mapToResponse)
                     .forEach(folderResponse -> response.getFolderResponses().add(folderResponse));
 
         return response;
     }
+
+    @Transactional(readOnly = true)
+    public FolderResponsePagination getAllFoldersWithPagination(Integer pageNumber, Integer pageElements){
+        FolderResponsePagination response = new FolderResponsePagination();
+        Pageable pageWithElements = PageRequest.of(pageNumber, pageElements);
+
+        Page<FolderInfo> page = projectFolderRepository.findAllProjectsWithPagination(pageWithElements);
+
+        var totalPages = page.getTotalPages();
+        var totalElements = (int) page.getTotalElements();
+
+        response.setTotalPages(totalPages);
+        response.setTotalElements(totalElements);
+
+        page.stream()
+                .map(folderMapper::mapToResponse)
+                .forEach(folderResponse -> response.getFolderResponses().add(folderResponse));
+
+        return response;
+    }
+
+
+
 
 }

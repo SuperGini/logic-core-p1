@@ -32,4 +32,21 @@ public interface ProjectFolderRepository extends HibernateRepository<ProjectFold
             """)
     Page<FolderInfo> findProjectsByUserIdWithPagination(@Param("userId") Long userId, Pageable pageable);
 
+
+    @Query("""
+         SELECT new com.gini.persitence.dto.FolderInfo(
+                user.id,
+                folder.id,
+                user.username,
+                folder.folderName,
+                folder.createDate,
+                folder.updateDate,
+                folder.lastUpdateByUser,
+                folder.folderType
+            )
+             FROM ProjectFolder folder
+             JOIN folder.user AS user
+         """)
+    Page<FolderInfo> findAllProjectsWithPagination(Pageable pageable);
+
 }

@@ -41,9 +41,17 @@ public class FolderController {
     @ResponseStatus(HttpStatus.OK)
     public FolderResponsePagination getAllFoldersByIdWithPagination(@PathVariable String userId,
                                                                     @PathVariable Integer pageNumber,
-                                                                    @PathVariable Integer pageElements
-    ) {
+                                                                    @PathVariable Integer pageElements) {
+
         return folderService.getAllFoldersByIdWithPagination(userId, pageNumber, pageElements);
+    }
+
+    @GetMapping("/folders/{pageNumber}/{pageElements}")
+    public FolderResponsePagination getAllFoldersWithPagination( @PathVariable Integer pageNumber,
+                                                                 @PathVariable Integer pageElements){
+
+        return folderService.getAllFoldersWithPagination(pageNumber, pageElements);
+
     }
 
 }
