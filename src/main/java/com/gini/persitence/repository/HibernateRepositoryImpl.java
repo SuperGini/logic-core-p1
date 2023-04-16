@@ -20,5 +20,4 @@ public class HibernateRepositoryImpl<T> implements HibernateRepository<T> {
         return entity;
     }
 
-
 }

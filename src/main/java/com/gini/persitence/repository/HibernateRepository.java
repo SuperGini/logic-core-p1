@@ -12,5 +12,4 @@ public interface HibernateRepository<T> {
 
     <S extends T> S persist(S entity);
 
-
 }

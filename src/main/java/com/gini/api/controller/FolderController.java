@@ -8,6 +8,7 @@ import com.gini.services.FolderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,11 +48,18 @@ public class FolderController {
     }
 
     @GetMapping("/folders/{pageNumber}/{pageElements}")
+    @ResponseStatus(HttpStatus.OK)
     public FolderResponsePagination getAllFoldersWithPagination( @PathVariable Integer pageNumber,
                                                                  @PathVariable Integer pageElements){
 
         return folderService.getAllFoldersWithPagination(pageNumber, pageElements);
 
+    }
+
+    @DeleteMapping("/folder/{folderId}/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    public int deleteUserFolder(@PathVariable String folderId, @PathVariable String userId){
+          return folderService.deleteUserFolder(folderId, userId);
     }
 
 }

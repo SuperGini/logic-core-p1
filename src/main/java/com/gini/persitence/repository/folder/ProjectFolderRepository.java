@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(propagation = Propagation.MANDATORY)
 public interface ProjectFolderRepository extends HibernateRepository<ProjectFolder>, JpaRepository<ProjectFolder, Long> {
 
+
+
     @Query("""
             SELECT new com.gini.persitence.dto.FolderInfo(
                 user.id,
@@ -34,19 +36,62 @@ public interface ProjectFolderRepository extends HibernateRepository<ProjectFold
 
 
     @Query("""
-         SELECT new com.gini.persitence.dto.FolderInfo(
-                user.id,
-                folder.id,
-                user.username,
-                folder.folderName,
-                folder.createDate,
-                folder.updateDate,
-                folder.lastUpdateByUser,
-                folder.folderType
-            )
-             FROM ProjectFolder folder
-             JOIN folder.user AS user
-         """)
+            SELECT new com.gini.persitence.dto.FolderInfo(
+                   user.id,
+                   folder.id,
+                   user.username,
+                   folder.folderName,
+                   folder.createDate,
+                   folder.updateDate,
+                   folder.lastUpdateByUser,
+                   folder.folderType
+               )
+                FROM ProjectFolder folder
+                JOIN folder.user AS user
+            """)
     Page<FolderInfo> findAllProjectsWithPagination(Pageable pageable);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    @Query("""
+//            SELECT folder FROM ProjectFolder folder LEFT JOIN folder.files AS files WHERE folder.id = :folderId
+//            """)
+//    ProjectFolder findProject2(@Param("folderId") Long folderId);
+
+
+    //    @Modifying(flushAutomatically = true)
+//    @Query("""
+//        DELETE FROM ProjectFolder AS folder WHERE  folder.id = :folderId AND folder.user.id = :userId AND EXISTS(SELECT f FROM folder.files f WHERE f.projectFolder.id = :folderId)
+//        """)
+//    int delete(@Param("folderId") Long folderId, @Param("userId") Long userId);
+
+
+//    @Query("""
+//        SELECT folder FROM ProjectFolder folder
+//        LEFT JOIN FETCH folder.files AS files
+//        WHERE folder.id = :folderId AND folder.user.id = :userId
+//        """)
+//    ProjectFolder findFolder(@Param("folderId") Long folderId, @Param("userId") Long userId);
+
 
 }

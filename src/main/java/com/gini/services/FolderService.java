@@ -5,6 +5,7 @@ import com.gini.dto.response.FolderResponse;
 import com.gini.dto.request.folder.FolderResponsePagination;
 import com.gini.mappers.response.FolderMapper;
 import com.gini.persitence.dto.FolderInfo;
+import com.gini.persitence.model.entities.File;
 import com.gini.persitence.model.entities.ProjectFolder;
 import com.gini.persitence.model.entities.User;
 import com.gini.persitence.model.enums.FolderType;
@@ -17,6 +18,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Find by Id anti-pattern
@@ -97,7 +101,26 @@ public class FolderService {
         return response;
     }
 
+    @Transactional
+    public int deleteUserFolder(String folderId, String userId){
+        var folderID = Long.parseLong(folderId);
+        var userID = Long.parseLong(userId);
 
+        projectFolderRepository.findById(folderID)
+                .ifPresentOrElse(x -> deleteFolder(userID, x),
+                        () -> new RuntimeException("Folder was not found"));
 
+        return 1;
+
+    }
+
+    private void deleteFolder(long userID, ProjectFolder x) {
+        var userIdFromDB = x.getUser().getId();
+        if(userIdFromDB == userID){             //todo: catch this exception in error handler
+            projectFolderRepository.delete(x); // throws OptimisticLockingFailureException if version is different
+        } else {
+            throw new RuntimeException("You are not allowed to delete the folder");
+        }
+    }
 
 }

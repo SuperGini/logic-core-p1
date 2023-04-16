@@ -89,7 +89,7 @@ public class ProjectFolder {
     private User user;
 
     @Builder.Default
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "projectFolder")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "projectFolder", orphanRemoval = true)
     private List<File> files = new ArrayList<>();
 
     @Override
