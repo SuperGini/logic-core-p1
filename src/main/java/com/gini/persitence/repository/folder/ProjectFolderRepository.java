@@ -11,6 +11,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Transactional(propagation = Propagation.MANDATORY)
 public interface ProjectFolderRepository extends HibernateRepository<ProjectFolder>, JpaRepository<ProjectFolder, Long> {
 
@@ -50,6 +52,8 @@ public interface ProjectFolderRepository extends HibernateRepository<ProjectFold
                 JOIN folder.user AS user
             """)
     Page<FolderInfo> findAllProjectsWithPagination(Pageable pageable);
+
+    Optional<ProjectFolder> findProjectFolderByIdAndFolderName(Long folderId, String folderName);
 
 
 

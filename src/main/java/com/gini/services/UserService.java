@@ -2,10 +2,10 @@ package com.gini.services;
 
 import com.gini.dto.request.user.LoginUserRequest;
 import com.gini.dto.request.user.CreateUserRequest;
-import com.gini.dto.response.UserResponse;
+import com.gini.dto.response.user.UserResponse;
 import com.gini.error.error.InvalidCredentialsException;
 import com.gini.error.error.UserAlreadyExists;
-import com.gini.error.error.UserNotFoundException;
+import com.gini.error.error.NotFoundException;
 import com.gini.mappers.request.UserMapper;
 import com.gini.persitence.model.entities.User;
 import com.gini.persitence.repository.user.UserRepository;
@@ -52,7 +52,7 @@ public class UserService {
 
         if (matcher.matches()) {
             user = userRepository.findUserByEmail(userRequest.usernameOrEmail())
-                    .orElseThrow(() -> new UserNotFoundException("User not Found"));
+                    .orElseThrow(() -> new NotFoundException("User not Found"));
 
             if (isCorrectPassword(userRequest, user)) {
                 return userRequestMapper.mapToResponse(user);
@@ -60,7 +60,7 @@ public class UserService {
         }
 
         user = userRepository.findUserByUsername(userRequest.usernameOrEmail())
-                .orElseThrow(() -> new UserNotFoundException("User not Found"));
+                .orElseThrow(() -> new NotFoundException("User not Found"));
 
         if (isCorrectPassword(userRequest, user)) {
             return userRequestMapper.mapToResponse(user);

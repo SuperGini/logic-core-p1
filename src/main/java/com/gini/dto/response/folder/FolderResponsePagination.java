@@ -1,6 +1,6 @@
-package com.gini.dto.request.folder;
+package com.gini.dto.response.folder;
 
-import com.gini.dto.response.FolderResponse;
+import com.gini.dto.response.user.FolderResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.gini.dto.response;
+package com.gini.dto.response.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;

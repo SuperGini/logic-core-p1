@@ -26,9 +26,9 @@ spring:
 
 ## Hibernate properties
   jpa:
-#   generate-ddl: true
+    generate-ddl: true
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     show-sql: false
     open-in-view: false
     properties:
@@ -64,3 +64,7 @@ logging:
         dsproxy:
           listener: info
 
+
+
+folder:
+  mainDirectory: rootDirectory

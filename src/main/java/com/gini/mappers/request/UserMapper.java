@@ -1,7 +1,7 @@
 package com.gini.mappers.request;
 
 import com.gini.dto.request.user.CreateUserRequest;
-import com.gini.dto.response.UserResponse;
+import com.gini.dto.response.user.UserResponse;
 import com.gini.mappers.Mapper;
 import com.gini.persitence.model.entities.User;
 import lombok.RequiredArgsConstructor;

@@ -1,11 +1,12 @@
 package com.gini.services;
 
 import com.gini.dto.request.folder.CreateFolderRequest;
-import com.gini.dto.response.FolderResponse;
-import com.gini.dto.request.folder.FolderResponsePagination;
+import com.gini.dto.response.user.FolderResponse;
+import com.gini.dto.response.folder.FolderResponsePagination;
+import com.gini.error.error.LogicCoreException;
+import com.gini.error.error.NotFoundException;
 import com.gini.mappers.response.FolderMapper;
 import com.gini.persitence.dto.FolderInfo;
-import com.gini.persitence.model.entities.File;
 import com.gini.persitence.model.entities.ProjectFolder;
 import com.gini.persitence.model.entities.User;
 import com.gini.persitence.model.enums.FolderType;
@@ -18,9 +19,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Find by Id anti-pattern
@@ -41,7 +39,6 @@ public class FolderService {
 
     @Transactional
     public FolderResponse createProjectFolder(CreateFolderRequest createFolderRequest) {
-
         Long userId = Long.parseLong(createFolderRequest.userId());
         String projectName = createFolderRequest.projectName();
 
@@ -108,19 +105,22 @@ public class FolderService {
 
         projectFolderRepository.findById(folderID)
                 .ifPresentOrElse(x -> deleteFolder(userID, x),
-                        () -> new RuntimeException("Folder was not found"));
+                        () -> {throw new NotFoundException("Folder was not found");}
+                );
 
         return 1;
 
     }
 
-    private void deleteFolder(long userID, ProjectFolder x) {
-        var userIdFromDB = x.getUser().getId();
-        if(userIdFromDB == userID){             //todo: catch this exception in error handler
-            projectFolderRepository.delete(x); // throws OptimisticLockingFailureException if version is different
-        } else {
-            throw new RuntimeException("You are not allowed to delete the folder");
+    private void deleteFolder(long userID, ProjectFolder folder) {
+        var userIdFromDB = folder.getUser().getId();
+
+        if(userIdFromDB != userID){
+            throw new LogicCoreException("You are not allowed to delete the folder");
         }
+
+        projectFolderRepository.delete(folder); // throws OptimisticLockingFailureException if version is different
+                                                //or entity was already deleted
     }
 
 }

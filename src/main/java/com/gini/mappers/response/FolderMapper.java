@@ -1,7 +1,7 @@
 package com.gini.mappers.response;
 
 import com.gini.dto.request.folder.CreateFolderRequest;
-import com.gini.dto.response.FolderResponse;
+import com.gini.dto.response.user.FolderResponse;
 import com.gini.mappers.Mapper;
 import com.gini.persitence.dto.FolderInfo;
 import com.gini.persitence.model.entities.ProjectFolder;

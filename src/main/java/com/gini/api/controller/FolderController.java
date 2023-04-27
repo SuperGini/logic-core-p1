@@ -2,8 +2,8 @@ package com.gini.api.controller;
 
 
 import com.gini.dto.request.folder.CreateFolderRequest;
-import com.gini.dto.response.FolderResponse;
-import com.gini.dto.request.folder.FolderResponsePagination;
+import com.gini.dto.response.user.FolderResponse;
+import com.gini.dto.response.folder.FolderResponsePagination;
 import com.gini.services.FolderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,9 +40,9 @@ public class FolderController {
 
     @GetMapping("/folders/{userId}/{pageNumber}/{pageElements}")
     @ResponseStatus(HttpStatus.OK)
-    public FolderResponsePagination getAllFoldersByIdWithPagination(@PathVariable String userId,
-                                                                    @PathVariable Integer pageNumber,
-                                                                    @PathVariable Integer pageElements) {
+    public FolderResponsePagination getAllFoldersByUserIdWithPagination(@PathVariable String userId,
+                                                                        @PathVariable Integer pageNumber,
+                                                                        @PathVariable Integer pageElements) {
 
         return folderService.getAllFoldersByIdWithPagination(userId, pageNumber, pageElements);
     }

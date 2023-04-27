@@ -1,8 +1,9 @@
 package com.gini.error.handler;
 
 import com.gini.error.error.InvalidCredentialsException;
+import com.gini.error.error.LogicCoreException;
 import com.gini.error.error.UserAlreadyExists;
-import com.gini.error.error.UserNotFoundException;
+import com.gini.error.error.NotFoundException;
 import com.gini.error.response.ErrorResponse;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -45,13 +46,13 @@ public class CustomExceptionHandler {
         );
     }
 
-    @ExceptionHandler(UserNotFoundException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleUserNotFoundException(UserNotFoundException e){
-        log.error("User not found: ", e);
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleNotFoundException(NotFoundException e){
+        log.error("Exception is: {}", e.getMessage(), e);
         return new ErrorResponse(
-                400,
-                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                404,
+                HttpStatus.NOT_FOUND.getReasonPhrase(),
                 e.getMessage()
         );
     }
@@ -73,7 +74,7 @@ public class CustomExceptionHandler {
     public ErrorResponse handleConstraintViolationException(ConstraintViolationException e){
         log.error("Invalid username: ", e);
         return new ErrorResponse(
-                404,
+                400,
                 HttpStatus.BAD_REQUEST.getReasonPhrase(),
                 e.getMessage());
     }
@@ -96,6 +97,27 @@ public class CustomExceptionHandler {
                 400,
                 HttpStatus.BAD_REQUEST.getReasonPhrase(),
                 "Could not create folder, wrong userId");
+    }
+
+    @ExceptionHandler(LogicCoreException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleLogicCoreException(LogicCoreException e){
+        log.error("Exception is: {}", e.getMessage(), e);
+        return new ErrorResponse(
+                400,
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                e.getMessage());
+    }
+
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleException(Exception e){
+        log.error("Exception is: {}", e.getMessage(), e);
+        return new ErrorResponse(
+                500,
+                HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
+                "Shit happens -> :( ");
     }
 
 

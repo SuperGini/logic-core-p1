@@ -1,4 +1,4 @@
-package com.gini.dto.response;
+package com.gini.dto.response.user;
 
 public record UserResponse(
         String username,
