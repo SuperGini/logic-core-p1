@@ -1,7 +1,7 @@
 package com.gini.services;
 
 import com.gini.dto.request.folder.CreateFolderRequest;
-import com.gini.dto.response.user.FolderResponse;
+import com.gini.dto.response.folder.FolderResponse;
 import com.gini.dto.response.folder.FolderResponsePagination;
 import com.gini.error.error.LogicCoreException;
 import com.gini.error.error.NotFoundException;
@@ -85,10 +85,10 @@ public class FolderService {
 
         Page<FolderInfo> page = projectFolderRepository.findAllProjectsWithPagination(pageWithElements);
 
-        var totalPages = page.getTotalPages();
+   //     var totalPages = page.getTotalPages();
         var totalElements = (int) page.getTotalElements();
 
-        response.setTotalPages(totalPages);
+      //  response.setTotalPages(totalPages);
         response.setTotalElements(totalElements);
 
         page.stream()

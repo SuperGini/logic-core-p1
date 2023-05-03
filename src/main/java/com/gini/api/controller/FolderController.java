@@ -2,7 +2,7 @@ package com.gini.api.controller;
 
 
 import com.gini.dto.request.folder.CreateFolderRequest;
-import com.gini.dto.response.user.FolderResponse;
+import com.gini.dto.response.folder.FolderResponse;
 import com.gini.dto.response.folder.FolderResponsePagination;
 import com.gini.services.FolderService;
 import lombok.RequiredArgsConstructor;

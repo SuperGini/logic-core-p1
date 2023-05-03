@@ -2,14 +2,20 @@ package com.gini.services;
 
 import com.gini.config.folder.MainFolderConfig;
 import com.gini.dto.request.folder.FolderInfoRequest;
+import com.gini.dto.response.file.FileResponse;
+import com.gini.dto.response.file.FileResponsePagination;
 import com.gini.error.error.LogicCoreException;
 import com.gini.error.error.NotFoundException;
 import com.gini.persitence.model.entities.File;
 import com.gini.persitence.model.entities.ProjectFolder;
+import com.gini.persitence.repository.folder.FileRepository;
 import com.gini.persitence.repository.folder.ProjectFolderRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,6 +34,7 @@ public class FileService {
 
     private final MainFolderConfig folderProperty;
     private final ProjectFolderRepository folderRepository;
+    private final FileRepository fileRepository;
 
     @Transactional
     public void saveFilesToFolder(FolderInfoRequest folderInfo, List<MultipartFile> imageFiles){
@@ -39,6 +46,46 @@ public class FileService {
                             () -> {throw new NotFoundException("Folder was not found");}
                 );
     }
+
+    @Transactional
+    public FileResponsePagination getFilesWithPaginationByFolderId(String folderId) {
+        List<FileResponse> fileResponses = new ArrayList<>();
+        var longFolderId = Long.parseLong(folderId);
+
+        Pageable pageRequest = PageRequest.of(0, 9);
+
+        Page<File> files = fileRepository.findAllProjectFileWithPagination(pageRequest, longFolderId);
+        var totalElements = (int) files.getTotalElements();
+
+         files.stream()
+                .map(this::convertToFileResponse)
+                 .forEach(fileResponses::add);
+
+         return new FileResponsePagination(totalElements, fileResponses);
+    }
+
+    private FileResponse convertToFileResponse(File file){
+        var fileId = String.valueOf(file.getId());
+        var folderId = String.valueOf(file.getProjectFolder().getId());
+        Path filePat = Path.of(file.getFileLocation());
+
+        byte [] fileAsBytes;
+
+        try {
+             fileAsBytes = Files.readAllBytes(filePat);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return new FileResponse(
+                fileId,
+                filePat.getFileName().toString(),
+                file.getFileFormat(),
+                folderId,
+                fileAsBytes
+        );
+    }
+
 
     private void saveFileToFolderAndDatabase(List<MultipartFile> imageFiles, ProjectFolder folder) {
         var files = new ArrayList<File>();
@@ -98,5 +145,6 @@ public class FileService {
                 .fileFormat(file.getContentType())
                 .build();
     }
+
 
 }
