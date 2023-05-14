@@ -48,11 +48,11 @@ public class FileService {
     }
 
     @Transactional
-    public FileResponsePagination getFilesWithPaginationByFolderId(String folderId) {
+    public FileResponsePagination getFilesWithPaginationByFolderId(String folderId, Integer pageNumber, Integer pageElements) {
         List<FileResponse> fileResponses = new ArrayList<>();
         var longFolderId = Long.parseLong(folderId);
 
-        Pageable pageRequest = PageRequest.of(0, 9);
+        Pageable pageRequest = PageRequest.of(pageNumber, pageElements);
 
         Page<File> files = fileRepository.findAllProjectFileWithPagination(pageRequest, longFolderId);
         var totalElements = (int) files.getTotalElements();
@@ -67,15 +67,9 @@ public class FileService {
     private FileResponse convertToFileResponse(File file){
         var fileId = String.valueOf(file.getId());
         var folderId = String.valueOf(file.getProjectFolder().getId());
-        Path filePat = Path.of(file.getFileLocation());
+        var filePat = Path.of(file.getFileLocation());
 
-        byte [] fileAsBytes;
-
-        try {
-             fileAsBytes = Files.readAllBytes(filePat);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        byte [] fileAsBytes = convertFileToBytes(filePat);
 
         return new FileResponse(
                 fileId,
@@ -84,6 +78,16 @@ public class FileService {
                 folderId,
                 fileAsBytes
         );
+    }
+
+    private static byte[] convertFileToBytes(Path filePat) {
+        byte[] fileAsBytes;
+        try {
+             fileAsBytes = Files.readAllBytes(filePat);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return fileAsBytes;
     }
 
 

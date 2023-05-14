@@ -36,10 +36,12 @@ public class FileController {
         fileService.saveFilesToFolder(folderInfo, imageFile);
     }
 
-    @GetMapping("/images/{folderId}")
+    @GetMapping("/images/{folderId}/{pageNumber}/{pageElements}")
     @ResponseStatus(HttpStatus.OK)
-    public FileResponsePagination getFiles(@PathVariable String folderId){
-       return fileService.getFilesWithPaginationByFolderId(folderId);
+    public FileResponsePagination getFiles(@PathVariable String folderId,
+                                           @PathVariable Integer pageNumber,
+                                           @PathVariable Integer pageElements){
+       return fileService.getFilesWithPaginationByFolderId(folderId, pageNumber, pageElements);
     }
 
 
