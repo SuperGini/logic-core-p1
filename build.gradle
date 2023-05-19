@@ -19,7 +19,7 @@ repositories {
 }
 
 ext {
-    set('testcontainersVersion', "1.17.6")
+    set('testcontainersVersion', "1.18.1")
 }
 
 dependencies {
@@ -63,6 +63,43 @@ dependencyManagement {
     }
 }
 
+
+//START ---- this is need it to configure integrationTest folder as a module for integration tests----------------------
+//https://javacodehouse.com/blog/spring-boot-integration-test-gradle-setup/
+sourceSets {
+    integrationTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+        }
+    }
+}
+
+tasks.register('integrationTest', Test) {
+    description = "Run integration tests"
+    group = "verification"
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+}
+
+
+configurations {
+    integrationTestImplementation.extendsFrom(testImplementation)
+    integrationTestRuntimeOnly.extendsFrom(testRuntimeOnly)
+}
+
+tasks.named('integrationTest') {
+    useJUnitPlatform()
+}
+//END integrationTest configuration module------------------------------------------------------------------------------
+
+
+
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+
+
+
+
