@@ -59,7 +59,7 @@ class UserControllerTest extends MySqlTestContainer {
 
     @Test
     @DisplayName("""
-            call /login endpoint and verify if the user is exists in database so
+            call /login endpoint and verify if the user exists in database so
             he can logg in the application
             """)
     void loginUserFlow() {
