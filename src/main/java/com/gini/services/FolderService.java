@@ -19,6 +19,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.FileSystemUtils;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * Find by Id anti-pattern
@@ -104,7 +109,7 @@ public class FolderService {
         var userID = Long.parseLong(userId);
 
         projectFolderRepository.findById(folderID)
-                .ifPresentOrElse(x -> deleteFolder(userID, x),
+                .ifPresentOrElse(x -> deleteFolderFromDatabaseAndLocally(userID, x),
                         () -> {throw new NotFoundException("Folder was not found");}
                 );
 
@@ -112,15 +117,30 @@ public class FolderService {
 
     }
 
-    private void deleteFolder(long userID, ProjectFolder folder) {
+    private void deleteFolderFromDatabaseAndLocally(long userID, ProjectFolder folder) {
         var userIdFromDB = folder.getUser().getId();
+        var folderName = folder.getFolderName();
 
         if(userIdFromDB != userID){
             throw new LogicCoreException("You are not allowed to delete the folder");
         }
 
+        deleteFolderLocally(folderName);
         projectFolderRepository.delete(folder); // throws OptimisticLockingFailureException if version is different
                                                 //or entity was already deleted
+    }
+
+    private void deleteFolderLocally(String folderName){
+        var folder = folderName.replace(" ", "_");
+        var folderPath = Path.of("rootDirectory/" +folder);
+        try {
+            if(Files.isDirectory(folderPath)){
+                FileSystemUtils.deleteRecursively(folderPath);
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException("Can't delete directory: " + folderName);
+        }
     }
 
 }
