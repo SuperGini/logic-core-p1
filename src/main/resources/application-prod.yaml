@@ -5,7 +5,7 @@ spring:
   application:
     name: logic-core
   datasource:
-    url: jdbc:mysql://${MYSQLHOST }:${MYSQLPORT}/${MYSQLDATABASE}
+    url: jdbc:mysql://${MYSQLHOST}:${MYSQLPORT}/${MYSQLDATABASE}
     username: ${MYSQLUSER}
     password: ${MYSQLPASSWORD}
 
