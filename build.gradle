@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.gini'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0'
 sourceCompatibility = '17'
 
 configurations {
@@ -99,11 +99,11 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-//bootJar {
-//    manifest {
-//        attributes 'Start-Class': 'com.gini.LogicCoreApplication'
-//    }
-//}
+bootJar {
+    manifest {
+        attributes 'Start-Class': 'com.gini.LogicCoreApplication'
+    }
+}
 
 
 
