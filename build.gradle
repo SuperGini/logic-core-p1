@@ -99,11 +99,11 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-bootJar {
-    manifest {
-        attributes 'Start-Class': 'com.gini.LogicCoreApplication'
-    }
-}
+//bootJar {
+//    manifest {
+//        attributes 'Start-Class': 'com.gini.LogicCoreApplication'
+//    }
+//}
 
 
 
