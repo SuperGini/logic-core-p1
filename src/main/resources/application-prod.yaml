@@ -62,7 +62,7 @@ logging:
     net:
       ttddyy:
         dsproxy:
-          listener: info
+          listener: debug
 
 
 

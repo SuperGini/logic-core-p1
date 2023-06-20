@@ -99,6 +99,7 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+//this generate a propper jar to run on railway
 jar {
     manifest {
         attributes 'Start-Class': 'com.gini.LogicCoreApplication'
